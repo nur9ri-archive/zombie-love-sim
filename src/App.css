@@ -84,9 +84,9 @@ button {
 
 /* Hero title image */
 .heroSection {
-  width: 100%;
+  width: auto;
+  margin: 0 -20px;
   padding: 0;
-  margin: 0;
 }
 
 .heroTopImageWrap {
@@ -530,34 +530,19 @@ button {
 .bottomBar {
   position: fixed;
   left: 50%;
-  bottom: 0;
   transform: translateX(-50%);
+  bottom: 0;
   width: 100%;
-  max-width: 420px;
-  background: rgba(0, 0, 0, 0.94);
-  backdrop-filter: blur(18px);
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  max-width: 430px;
   padding: 14px 20px 18px;
-  z-index: 9999;
+  background: transparent;
+  border-top: none;
+  z-index: 100;
+  pointer-events: none;
 }
 
-.bottomBar button,
-.primaryButton {
-  width: 100%;
-  height: 54px;
-  border: none !important;
-  border-radius: 16px;
-  background: #52487a !important;
-  color: #fff !important;
-  font-size: 16px;
-  font-weight: 900;
-  letter-spacing: -0.04em;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  cursor: pointer;
-  box-shadow: none;
+.bottomBar button {
+  pointer-events: auto;
 }
 
 .bottomBar button:disabled,
