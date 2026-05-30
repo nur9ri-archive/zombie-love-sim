@@ -537,7 +537,8 @@ function ProgressBar({ current, total }) {
 
 export default function App() {
   const [step, setStep] = useState("intro");
-  const [selectedCharacterId, setSelectedCharacterId] = useState(null);
+  const [selectedCharacterId, setSelectedCharacterId] = useState("A");
+  const [flippedCharacterId, setFlippedCharacterId] = useState(null);
   const [questionIndex, setQuestionIndex] = useState(0);
   const [affection, setAffection] = useState(0);
   const [lastReaction, setLastReaction] = useState(null);
@@ -561,7 +562,8 @@ export default function App() {
 
   const reset = () => {
     setStep("intro");
-    setSelectedCharacterId(null);
+    setSelectedCharacterId("A");
+    setFlippedCharacterId(null);
     setQuestionIndex(0);
     setAffection(0);
     setLastReaction(null);
@@ -730,10 +732,9 @@ export default function App() {
                 <div className="cardSlider">
                   {characterOrder.map((id, index) => {
                     const character = characters[id];
-                    const isSelected = selectedCharacterId === character.id;
-                    const selectedIndex = selectedCharacterId
-                      ? characterOrder.indexOf(selectedCharacterId)
-                      : 0;
+                    const isActive = selectedCharacterId === character.id;
+                    const isFlipped = flippedCharacterId === character.id;
+                    const selectedIndex = characterOrder.indexOf(selectedCharacterId);
                     const offset = index - selectedIndex;
 
                     return (
@@ -741,13 +742,26 @@ export default function App() {
                         key={character.id}
                         role="button"
                         tabIndex={0}
-                        onClick={() =>
-                          setSelectedCharacterId(isSelected ? null : character.id)
-                        }
+                        onClick={() => {
+                          if (!isActive) {
+                            setSelectedCharacterId(character.id);
+                            setFlippedCharacterId(null);
+                            return;
+                          }
+                        
+                          setFlippedCharacterId(isFlipped ? null : character.id);
+                        }}
                         onKeyDown={(event) => {
                           if (event.key === "Enter" || event.key === " ") {
                             event.preventDefault();
-                            setSelectedCharacterId(isSelected ? null : character.id);
+                        
+                            if (!isActive) {
+                              setSelectedCharacterId(character.id);
+                              setFlippedCharacterId(null);
+                              return;
+                            }
+                        
+                            setFlippedCharacterId(isFlipped ? null : character.id);
                           }
                         }}
                         className={`slideCard ${isSelected ? "isSelected" : ""}`}
@@ -762,7 +776,7 @@ export default function App() {
                       >
                         <motion.div
                           className="flipCardInner"
-                          animate={{ rotateY: isSelected ? 180 : 0 }}
+                          animate={{ rotateY: isFlipped ? 180 : 0 }}
                           transition={{ duration: 0.55, ease: "easeInOut" }}
                         >
                           <div className="flipFace flipFront">
@@ -794,7 +808,8 @@ export default function App() {
                       const prevIndex =
                         (currentIndex - 1 + characterOrder.length) %
                         characterOrder.length;
-                      setSelectedCharacterId(characterOrder[prevIndex]);
+                        setSelectedCharacterId(characterOrder[prevIndex]);
+                        setFlippedCharacterId(null);
                     }}
                   >
                     <ChevronLeft size={26} strokeWidth={3} />
@@ -810,6 +825,7 @@ export default function App() {
                       : 0;
                     const nextIndex = (currentIndex + 1) % characterOrder.length;
                     setSelectedCharacterId(characterOrder[nextIndex]);
+                    setFlippedCharacterId(null);
                   }}
                 >
                   <ChevronRight size={26} strokeWidth={3} />
