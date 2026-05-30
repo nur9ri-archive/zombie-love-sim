@@ -764,7 +764,7 @@ export default function App() {
                             setFlippedCharacterId(isFlipped ? null : character.id);
                           }
                         }}
-                        className={`slideCard ${isSelected ? "isSelected" : ""}`}
+                        className={`slideCard ${isActive ? "isSelected" : ""}`}
                         style={{
                           transform: `translateX(${offset * 72}%) scale(${
                             offset === 0 ? 1 : 0.82
