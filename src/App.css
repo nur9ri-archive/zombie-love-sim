@@ -1,10 +1,11 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700;900&display=swap");
+
 * {
   box-sizing: border-box;
 }
 
 :root {
-  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard",
-    "Noto Sans KR", system-ui, sans-serif;
+  font-family: "Noto Serif KR", serif;
   color: #111;
   background: #000;
 }
@@ -21,12 +22,14 @@ body {
   margin: 0;
   background: #000;
   overflow-x: hidden;
+  font-family: "Noto Serif KR", serif;
 }
 
 button {
-  font-family: inherit;
+  font-family: "Noto Serif KR", serif;
 }
 
+/* Base layout */
 .appRoot {
   width: 100%;
   min-height: 100vh;
@@ -82,7 +85,7 @@ button {
 /* Hero title image */
 .heroSection {
   width: 100%;
-  padding: 0px 0px;
+  padding: 0;
 }
 
 .mainTitleImage {
@@ -158,6 +161,7 @@ button {
   transform: rotateY(180deg);
 }
 
+/* Character navigation buttons */
 .cardNavButton {
   position: absolute;
   top: 50%;
@@ -235,6 +239,35 @@ button {
   text-align: right;
 }
 
+.question-visual {
+  width: calc(100% - 48px);
+  height: 220px;
+  margin: 28px auto 0;
+  border-radius: 28px;
+  overflow: hidden;
+  position: relative;
+  background: #111;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.55);
+}
+
+.question-visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: brightness(0.65) saturate(0.9) contrast(1.05);
+}
+
+.question-visual::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.5)),
+    linear-gradient(to top, rgba(0, 0, 0, 0.1), transparent);
+  pointer-events: none;
+}
+
 .questionCard {
   margin-top: 24px;
   padding: 24px 22px;
@@ -308,6 +341,27 @@ button {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.reactionPortraitWrap {
+  width: 90%;
+  aspect-ratio: 1 / 1;
+  margin: 0 auto 10px;
+  border-radius: 999px;
+  overflow: hidden;
+  border: 0;
+  background: #111;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
+}
+
+.reactionPortrait {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
 }
 
 .reactionLabel {
@@ -327,7 +381,7 @@ button {
 
 .reactionScore {
   margin-top: 24px;
-  align-self: flex-start;
+  align-self: center;
   border-radius: 999px;
   background: #111;
   color: #fff;
@@ -337,7 +391,61 @@ button {
 }
 
 /* Result */
+.resultCaptureArea {
+  background: #000;
+}
+
+.resultImageWrap {
+  position: relative;
+  margin-top: 16px;
+  border-radius: 28px;
+  overflow: hidden;
+  background: #18181b;
+}
+
+.resultImage {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+.floatingResultInfo {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  top: auto;
+  bottom: 14px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  z-index: 2;
+}
+
+.floatingResultInfo > div {
+  border-radius: 16px;
+  background: rgba(0, 0, 0, 0.58);
+  color: #fff;
+  padding: 11px 12px;
+  backdrop-filter: blur(12px);
+}
+
+.floatingResultInfo span {
+  display: block;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.62);
+  font-weight: 800;
+  margin-bottom: 3px;
+}
+
+.floatingResultInfo strong {
+  display: block;
+  font-size: 16px;
+  font-weight: 900;
+}
+
 .resultTextCard {
+  margin-top: 16px;
   background: #f4f4f5;
   border-radius: 28px;
   padding: 24px 22px;
@@ -386,54 +494,6 @@ button {
   letter-spacing: -0.03em;
 }
 
-.resultImageWrap {
-  position: relative;
-  margin-top: 16px;
-  border-radius: 28px;
-  overflow: hidden;
-  background: #18181b;
-}
-
-.resultImage {
-  display: block;
-  width: 100%;
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
-}
-
-.floatingResultInfo {
-  position: absolute;
-  left: 14px;
-  right: 14px;
-  top: auto;
-  bottom: 14px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-}
-
-.floatingResultInfo > div {
-  border-radius: 16px;
-  background: rgba(0, 0, 0, 0.58);
-  color: #fff;
-  padding: 11px 12px;
-  backdrop-filter: blur(12px);
-}
-
-.floatingResultInfo span {
-  display: block;
-  font-size: 11px;
-  color: rgba(255, 255, 255, 0.62);
-  font-weight: 800;
-  margin-bottom: 3px;
-}
-
-.floatingResultInfo strong {
-  display: block;
-  font-size: 16px;
-  font-weight: 900;
-}
-
 /* Bottom buttons */
 .bottomBar {
   position: fixed;
@@ -446,7 +506,7 @@ button {
   backdrop-filter: blur(18px);
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   padding: 14px 20px 18px;
-  z-index: 100;
+  z-index: 9999;
 }
 
 .bottomBar button,
@@ -455,8 +515,8 @@ button {
   height: 54px;
   border: none !important;
   border-radius: 16px;
-  background: #52487A !important;
-  color: #Fff !important;
+  background: #52487a !important;
+  color: #fff !important;
   font-size: 16px;
   font-weight: 900;
   letter-spacing: -0.04em;
@@ -486,6 +546,7 @@ button {
   color: #fff !important;
 }
 
+/* Small screen */
 @media (max-width: 360px) {
   .main {
     padding-left: 16px;
@@ -506,168 +567,4 @@ button {
   .reactionCard p {
     font-size: 23px;
   }
-}
-
-.question-visual {
-  width: calc(100% - 48px);
-  height: 220px;
-  margin: 28px auto 0;
-  border-radius: 28px;
-  overflow: hidden;
-  position: relative;
-  background: #111;
-  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.55);
-}
-
-.question-visual img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  filter: brightness(0.65) saturate(0.9) contrast(1.05);
-}
-
-.question-visual::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.5)),
-    linear-gradient(to top, rgba(0, 0, 0, 0.1), transparent);
-  pointer-events: none;
-}
-.question-card {
-  position: relative;
-  z-index: 2;
-  margin: -34px 40px 0;
-}
-
-.reactionPortraitWrap {
-  width: 220px;
-  height: 220px;
-  margin: 0 auto 40px;
-  border-radius: 999px;
-  overflow: hidden;
-  border: 8px solid #ffffff;
-  background: #111111;
-  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
-}
-
-.reactionPortrait {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  display: block;
-}
-
-.reactionPortraitWrap {
-  width: 90%;
-  height: 90%;
-  margin: 0 auto 10px;
-  border-radius: 999px;
-  overflow: hidden;
-  border: 0px solid #ffffff;
-  background: #111111;
-  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
-}
-.reactionCard {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.reactionScore {
-  align-self: center;
-}
-
-.resultCaptureArea {
-  background: #000;
-}
-
-.resultFooter {
-  position: fixed !important;
-  left: 50% !important;
-  bottom: 0 !important;
-  transform: translateX(-50%) !important;
-  width: 100% !important;
-  max-width: 420px !important;
-  display: grid !important;
-  grid-template-columns: 1fr 1fr !important;
-  gap: 10px !important;
-  padding: 14px 20px 18px !important;
-  background: rgba(0, 0, 0, 0.94) !important;
-  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
-  z-index: 9999 !important;
-}
-
-.resultFooter button {
-  width: 100% !important;
-  height: 54px !important;
-  border: none !important;
-  border-radius: 16px !important;
-  background: #52487A !important;
-  color: #fff !important;
-  font-size: 16px !important;
-  font-weight: 900 !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 6px !important;
-}
-
-.resultFooter button.secondaryButton {
-  background: rgba(255, 255, 255, 0.14) !important;
-}
-
-.bottomBar {
-  position: fixed !important;
-  left: 50% !important;
-  bottom: 0 !important;
-  transform: translateX(-50%) !important;
-  width: 100% !important;
-  max-width: 420px !important;
-  background: rgba(0, 0, 0, 0.94) !important;
-  backdrop-filter: blur(18px);
-  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
-  padding: 14px 20px 18px !important;
-  z-index: 99999 !important;
-  display: block !important;
-}
-
-.bottomBar button {
-  width: 100% !important;
-  height: 54px !important;
-  border: none !important;
-  border-radius: 16px !important;
-  background: #52487A !important;
-  color: #fff !important;
-  font-size: 16px !important;
-  font-weight: 900 !important;
-  letter-spacing: -0.04em;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 6px !important;
-  cursor: pointer !important;
-  opacity: 1 !important;
-  visibility: visible !important;
-}
-
-.bottomBar button:disabled {
-  background: rgba(255, 255, 255, 0.18) !important;
-  color: rgba(255, 255, 255, 0.4) !important;
-  cursor: not-allowed !important;
-}
-
-.resultFooter {
-  display: grid !important;
-  grid-template-columns: 1fr 1fr !important;
-  gap: 10px !important;
-}
-
-.resultFooter button.secondaryButton {
-  background: rgba(255, 255, 255, 0.14) !important;
-  color: #fff !important;
 }
