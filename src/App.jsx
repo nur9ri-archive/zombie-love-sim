@@ -543,6 +543,7 @@ export default function App() {
   const [lastReaction, setLastReaction] = useState(null);
   const [answerHistory, setAnswerHistory] = useState([]);
   const [isSaving, setIsSaving] = useState(false);
+  const [savedImageUrl, setSavedImageUrl] = useState(null);
   
   const resultCaptureRef = useRef(null);
 
@@ -565,6 +566,8 @@ export default function App() {
     setAffection(0);
     setLastReaction(null);
     setAnswerHistory([]);
+    setSavedImageUrl(null);
+    setIsSaving(false);
   };
 
   const startGame = () => {
@@ -643,6 +646,7 @@ export default function App() {
   
     try {
       setIsSaving(true);
+      setSavedImageUrl(null);
   
       await document.fonts.ready;
   
@@ -666,22 +670,11 @@ export default function App() {
         logging: false,
       });
   
-      const blob = await new Promise((resolve) => {
-        canvas.toBlob((createdBlob) => resolve(createdBlob), "image/png");
-      });
-  
-      if (!blob) {
-        alert("이미지 생성에 실패했습니다.");
-        setIsSaving(false);
-        return;
-      }
-  
-      const imageUrl = URL.createObjectURL(blob);
+      const imageUrl = canvas.toDataURL("image/png");
       const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
   
       if (isMobile) {
-        window.open(imageUrl, "_blank");
-        alert("이미지가 새 창으로 열리면 길게 눌러 저장하세요.");
+        setSavedImageUrl(imageUrl);
       } else {
         const link = document.createElement("a");
         link.href = imageUrl;
@@ -690,14 +683,10 @@ export default function App() {
         link.click();
         document.body.removeChild(link);
       }
-  
-      setTimeout(() => {
-        URL.revokeObjectURL(imageUrl);
-        setIsSaving(false);
-      }, 1500);
     } catch (error) {
       console.error(error);
       alert("결과 이미지 저장에 실패했습니다.");
+    } finally {
       setIsSaving(false);
     }
   };
@@ -978,6 +967,32 @@ export default function App() {
                 다시
               </button>
             </footer>
+          )}
+
+          {savedImageUrl && (
+            <div className="savePreviewOverlay">
+              <div className="savePreviewPanel">
+                <div className="savePreviewTitle">결과 이미지 저장</div>
+
+                <p className="savePreviewGuide">
+                  이미지를 길게 눌러 저장하세요.
+                </p>
+
+                <img
+                  src={savedImageUrl}
+                  alt="저장할 결과 이미지"
+                  className="savePreviewImage"
+                />
+
+                <button
+                  type="button"
+                  className="savePreviewClose"
+                  onClick={() => setSavedImageUrl(null)}
+                >
+                  닫기
+                </button>
+              </div>
+            </div>
           )}
       </div>
     </div>
