@@ -544,8 +544,6 @@ export default function App() {
   const [lastReaction, setLastReaction] = useState(null);
   const [answerHistory, setAnswerHistory] = useState([]);
   const [isSaving, setIsSaving] = useState(false);
-  const [savedImageUrl, setSavedImageUrl] = useState(null);
-  const [savedImageBlob, setSavedImageBlob] = useState(null);
   
   const resultCaptureRef = useRef(null);
 
@@ -569,9 +567,7 @@ export default function App() {
     setAffection(0);
     setLastReaction(null);
     setAnswerHistory([]);
-    setSavedImageUrl(null);
     setIsSaving(false);
-    setSavedImageBlob(null);
   };
 
   const startGame = () => {
@@ -651,13 +647,6 @@ export default function App() {
     try {
       setIsSaving(true);
   
-      if (savedImageUrl) {
-        URL.revokeObjectURL(savedImageUrl);
-      }
-  
-      setSavedImageUrl(null);
-      setSavedImageBlob(null);
-  
       await document.fonts.ready;
   
       const images = Array.from(resultCaptureRef.current.querySelectorAll("img"));
@@ -677,41 +666,19 @@ export default function App() {
   
       const canvas = await html2canvas(resultCaptureRef.current, {
         backgroundColor: "#000000",
-        scale: isMobile ? 1.5 : 2,
+        scale: isMobile ? 1.2 : 2,
         useCORS: true,
         logging: false,
       });
   
-      const blob = await new Promise((resolve) => {
-        canvas.toBlob(
-          (createdBlob) => resolve(createdBlob),
-          "image/jpeg",
-          0.92
-        );
-      });
+      const imageUrl = canvas.toDataURL("image/jpeg", 0.9);
   
-      if (!blob) {
-        alert("이미지 생성에 실패했습니다.");
-        return;
-      }
-  
-      const imageUrl = URL.createObjectURL(blob);
-  
-      if (isMobile) {
-        setSavedImageBlob(blob);
-        setSavedImageUrl(imageUrl);
-      } else {
-        const link = document.createElement("a");
-        link.href = imageUrl;
-        link.download = "zombie-love-result.jpg";
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-  
-        setTimeout(() => {
-          URL.revokeObjectURL(imageUrl);
-        }, 1000);
-      }
+      const link = document.createElement("a");
+      link.href = imageUrl;
+      link.download = "zombie-love-result.jpg";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     } catch (error) {
       console.error(error);
       alert("결과 이미지 저장에 실패했습니다.");
@@ -720,42 +687,6 @@ export default function App() {
     }
   };
 
-  const shareSavedImage = async () => {
-    if (!savedImageBlob) {
-      alert("공유할 이미지가 없습니다.");
-      return;
-    }
-  
-    const file = new File([savedImageBlob], "zombie-love-result.jpg", {
-      type: "image/jpeg",
-    });
-  
-    try {
-      if (navigator.canShare && navigator.canShare({ files: [file] })) {
-        await navigator.share({
-          title: "좀비 아포칼립스 연애 시뮬레이션",
-          text: "나와 좀비 아포칼립스에서 함께 생존할 남자는?",
-          files: [file],
-        });
-        return;
-      }
-  
-      alert(
-        "이 브라우저에서는 이미지 공유 저장이 지원되지 않습니다.\n\n우측 상단 메뉴에서 외부 브라우저로 열어주세요."
-      );
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  
-  const closeSavedImagePreview = () => {
-    if (savedImageUrl) {
-      URL.revokeObjectURL(savedImageUrl);
-    }
-  
-    setSavedImageUrl(null);
-    setSavedImageBlob(null);
-  };
 
   return (
     <div className="appRoot">
@@ -1040,49 +971,13 @@ export default function App() {
             <footer className="bottomBar resultFooter">
               <button type="button" onClick={copyShareText} disabled={isSaving}>
                 <Share2 size={17} />
-                {isSaving ? "저장 준비 중" : "결과 이미지 저장"}
+                {isSaving ? "저장 중" : "결과 이미지 저장"}
               </button>
               <button type="button" onClick={reset} className="secondaryButton">
                 <RotateCcw size={17} />
                 다시
               </button>
             </footer>
-          )}
-
-          {savedImageUrl && (
-            <div className="savePreviewOverlay">
-              <div className="savePreviewPanel">
-                <div className="savePreviewTitle">결과 이미지 저장</div>
-
-                <p className="savePreviewGuide">
-                  아래 버튼을 눌러 휴대폰 공유창에서 저장하거나 공유하세요.
-                </p>
-
-                <img
-                  src={savedImageUrl}
-                  alt="저장할 결과 이미지"
-                  className="savePreviewImage"
-                />
-
-                <div className="savePreviewActions">
-                  <button
-                    type="button"
-                    className="savePreviewShare"
-                    onClick={shareSavedImage}
-                  >
-                    이미지 공유/저장
-                  </button>
-
-                  <button
-                    type="button"
-                    className="savePreviewClose"
-                    onClick={closeSavedImagePreview}
-                  >
-                    닫기
-                  </button>
-                </div>
-              </div>
-            </div>
           )}
       </div>
     </div>
