@@ -940,8 +940,13 @@ export default function App() {
         )}
 
         
-         {step === "result" && (
-            <footer className="bottomBar resultFooter">
+        {step === "result" && (
+          <footer className="bottomBar resultBottomBar">
+            <p className="inappNotice">
+              인앱 브라우저에서는 결과저장이 안될 수도 있습니다. 크롬/사파리를 이용해주세요.
+            </p>
+
+            <div className="resultFooter">
               <button type="button" onClick={copyShareText}>
                 <Share2 size={17} />
                 결과 이미지 저장
@@ -950,8 +955,9 @@ export default function App() {
                 <RotateCcw size={17} />
                 다시
               </button>
-            </footer>
-          )}
+            </div>
+          </footer>
+        )}
       </div>
     </div>
   );
