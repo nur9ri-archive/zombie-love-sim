@@ -867,7 +867,7 @@ export default function App() {
             <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}>
               
 
-              <div className="resultCaptureArea">
+              <div className="resultArea">
               <section className="resultImageWrap">
                   <img
                     src={getResultImageSrc(selectedCharacter.id, result.type)}

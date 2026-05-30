@@ -75,7 +75,7 @@ button {
 
 /* Layout */
 .main {
-  padding: 0 20px 104px;
+  padding: 0 20px 140px;
 }
 
 .introMain {
@@ -530,15 +530,17 @@ button {
 .bottomBar {
   position: fixed;
   left: 50%;
-  bottom: 0;
+  bottom: max(18px, env(safe-area-inset-bottom));
   transform: translateX(-50%);
-  width: 100%;
-  max-width: 420px;
+  width: calc(100% - 24px);
+  max-width: 396px;
   background: rgba(0, 0, 0, 0.94);
   backdrop-filter: blur(18px);
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 14px 20px 18px;
-  z-index: 9999;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 22px;
+  padding: 12px;
+  z-index: 99999;
+  pointer-events: auto;
 }
 
 .bottomBar button,
@@ -565,6 +567,13 @@ button {
   background: rgba(255, 255, 255, 0.18) !important;
   color: rgba(255, 255, 255, 0.35) !important;
   cursor: not-allowed;
+}
+
+.bottomBar button {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  position: relative;
+  z-index: 100000;
 }
 
 .resultFooter {
