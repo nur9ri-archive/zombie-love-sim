@@ -542,7 +542,8 @@ export default function App() {
   const [affection, setAffection] = useState(0);
   const [lastReaction, setLastReaction] = useState(null);
   const [answerHistory, setAnswerHistory] = useState([]);
-
+  const [isSaving, setIsSaving] = useState(false);
+  
   const resultCaptureRef = useRef(null);
 
   const selectedCharacter = selectedCharacterId ? characters[selectedCharacterId] : null;
@@ -633,17 +634,36 @@ export default function App() {
   };
 
   const copyShareText = async () => {
+    if (isSaving) return;
+  
     if (!resultCaptureRef.current) {
       alert("캡처할 결과 영역을 찾지 못했습니다.");
       return;
     }
   
     try {
+      setIsSaving(true);
+  
+      await document.fonts.ready;
+  
+      const images = Array.from(resultCaptureRef.current.querySelectorAll("img"));
+  
+      await Promise.all(
+        images.map((img) => {
+          if (img.complete) return Promise.resolve();
+  
+          return new Promise((resolve) => {
+            img.onload = resolve;
+            img.onerror = resolve;
+          });
+        })
+      );
+  
       const canvas = await html2canvas(resultCaptureRef.current, {
         backgroundColor: "#000000",
         scale: 2,
         useCORS: true,
-        logging: true,
+        logging: false,
       });
   
       const blob = await new Promise((resolve) => {
@@ -652,24 +672,33 @@ export default function App() {
   
       if (!blob) {
         alert("이미지 생성에 실패했습니다.");
+        setIsSaving(false);
         return;
       }
   
       const imageUrl = URL.createObjectURL(blob);
-      const link = document.createElement("a");
+      const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
   
-      link.href = imageUrl;
-      link.download = "zombie-love-result.png";
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
+      if (isMobile) {
+        window.open(imageUrl, "_blank");
+        alert("이미지가 새 창으로 열리면 길게 눌러 저장하세요.");
+      } else {
+        const link = document.createElement("a");
+        link.href = imageUrl;
+        link.download = "zombie-love-result.png";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
   
-      URL.revokeObjectURL(imageUrl);
-  
-      alert("결과 이미지가 저장되었습니다.");
+      setTimeout(() => {
+        URL.revokeObjectURL(imageUrl);
+        setIsSaving(false);
+      }, 1500);
     } catch (error) {
       console.error(error);
-      alert("결과 이미지 저장에 실패했습니다. 결과 이미지 파일명을 확인해주세요.");
+      alert("결과 이미지 저장에 실패했습니다.");
+      setIsSaving(false);
     }
   };
 
@@ -937,18 +966,19 @@ export default function App() {
           </footer>
         )}
 
-        {step === "result" && (
-          <footer className="bottomBar resultFooter">
-            <button type="button" onClick={copyShareText}>
-              <Share2 size={17} />
-              결과 이미지 저장
-            </button>
-            <button type="button" onClick={reset} className="secondaryButton">
-              <RotateCcw size={17} />
-              다시
-            </button>
-          </footer>
-        )}
+        
+         {step === "result" && (
+            <footer className="bottomBar resultFooter">
+              <button type="button" onClick={copyShareText} disabled={isSaving}>
+                <Share2 size={17} />
+                {isSaving ? "저장 준비 중" : "결과 이미지 저장"}
+              </button>
+              <button type="button" onClick={reset} className="secondaryButton">
+                <RotateCcw size={17} />
+                다시
+              </button>
+            </footer>
+          )}
       </div>
     </div>
   );
