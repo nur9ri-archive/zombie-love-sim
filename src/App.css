@@ -88,6 +88,34 @@ button {
   padding: 0;
 }
 
+.heroTopImageWrap {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  position: relative;
+  border-radius: 0 0 24px 24px;
+  margin-bottom: 10px;
+  background: #000;
+}
+
+.heroTopImageWrap::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 45%;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0), #000);
+  pointer-events: none;
+}
+
+.heroTopImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
 .mainTitleImage {
   display: block;
   width: 100%;

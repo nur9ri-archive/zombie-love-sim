@@ -5,6 +5,7 @@ import { ChevronLeft, ChevronRight, Heart, RotateCcw, Share2 } from "lucide-reac
 import "./App.css";
 
 const heroImageSrc = "/images/hero/title-main.png";
+const heroBgImageSrc = "/images/hero/top-bg.png";
 
 const characters = {
   A: {
@@ -684,10 +685,24 @@ export default function App() {
           {step === "intro" && (
             <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}>
               <section className="heroSection">
+                <div className="heroTopImageWrap">
+                  <img
+                    src={heroBgImageSrc}
+                    alt=""
+                    className="heroTopImage"
+                    loading="eager"
+                    fetchPriority="high"
+                    decoding="async"
+                  />
+                </div>
+
                 <img
                   src={heroImageSrc}
                   alt="나와 좀비 아포칼립스에서 함께 생존할 남자는?"
                   className="mainTitleImage"
+                  loading="eager"
+                  fetchPriority="high"
+                  decoding="async"
                 />
               </section>
 
@@ -846,7 +861,7 @@ export default function App() {
                 <div className="reactionLabel">
                   {selectedCharacter.reactionName || selectedCharacter.name}의 반응
                 </div>
-                
+
                 <p>“{lastReaction.text}”</p>
 
                 <div className="reactionScore">
