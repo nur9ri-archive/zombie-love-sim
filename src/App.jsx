@@ -943,7 +943,9 @@ export default function App() {
         {step === "result" && (
           <footer className="bottomBar resultBottomBar">
             <p className="inappNotice">
-              인앱 브라우저에서는 결과저장이 안될 수도 있습니다. 크롬/사파리를 이용해주세요.
+              인앱 브라우저에서는 결과저장이 안될 수도 있습니다.
+              <br />
+              크롬/사파리를 이용해주세요.
             </p>
 
             <div className="resultFooter">
@@ -957,6 +959,7 @@ export default function App() {
               </button>
             </div>
           </footer>
+        )}
         )}
       </div>
     </div>
