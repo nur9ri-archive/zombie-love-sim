@@ -423,7 +423,7 @@ button {
 }
 
 /* Result */
-.resultCaptureArea {
+.resultArea {
   background: #000;
 }
 
@@ -623,44 +623,3 @@ button,
   font-family: "Noto Serif KR", serif !important;
 }
 
-.bottomBar button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-.bottomBar button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-
-
-
-.savePreviewActions {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 10px;
-  margin-top: 14px;
-}
-
-.savePreviewShare {
-  width: 100%;
-  border: none;
-  border-radius: 16px;
-  padding: 14px 16px;
-  background: #8300e0;
-  color: #fff;
-  font-weight: 900;
-  cursor: pointer;
-}
-
-.savePreviewClose {
-  width: 100%;
-  border: none;
-  border-radius: 16px;
-  padding: 14px 16px;
-  background: #52487a;
-  color: #fff;
-  font-weight: 900;
-  cursor: pointer;
-}

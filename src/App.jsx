@@ -1,5 +1,4 @@
-import React, { useMemo, useRef, useState } from "react";
-import html2canvas from "html2canvas";
+import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, Heart, RotateCcw, Share2 } from "lucide-react";
 import "./App.css";
@@ -520,6 +519,10 @@ function getResultImageSrc(characterId, resultType) {
   return `/images/results/${characterId}-${resultType}.png`;
 }
 
+function getSavedResultImageSrc(characterId, resultType) {
+  return `/images/saved-results/${characterId}-${resultType}-saved.png`;
+}
+
 function getReactionMood(score) {
   if (score >= 2) return "plus2";
   if (score === 1) return "plus1";
@@ -543,9 +546,7 @@ export default function App() {
   const [affection, setAffection] = useState(0);
   const [lastReaction, setLastReaction] = useState(null);
   const [answerHistory, setAnswerHistory] = useState([]);
-  const [isSaving, setIsSaving] = useState(false);
-  
-  const resultCaptureRef = useRef(null);
+
 
   const selectedCharacter = selectedCharacterId ? characters[selectedCharacterId] : null;
   const currentQuestion = questions[questionIndex];
@@ -567,7 +568,6 @@ export default function App() {
     setAffection(0);
     setLastReaction(null);
     setAnswerHistory([]);
-    setIsSaving(false);
   };
 
   const startGame = () => {
@@ -636,73 +636,17 @@ export default function App() {
     setStep("question");
   };
 
-  const copyShareText = async () => {
-    if (isSaving) return;
+  const copyShareText = () => {
+    if (!selectedCharacter || !result) return;
   
-    if (!resultCaptureRef.current) {
-      alert("캡처할 결과 영역을 찾지 못했습니다.");
-      return;
-    }
+    const imageUrl = getSavedResultImageSrc(selectedCharacter.id, result.type);
   
-    try {
-      setIsSaving(true);
-  
-      await document.fonts.ready;
-  
-      const images = Array.from(resultCaptureRef.current.querySelectorAll("img"));
-  
-      await Promise.all(
-        images.map((img) => {
-          if (img.complete) return Promise.resolve();
-  
-          return new Promise((resolve) => {
-            img.onload = resolve;
-            img.onerror = resolve;
-          });
-        })
-      );
-  
-      const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-  
-      const canvas = await html2canvas(resultCaptureRef.current, {
-        backgroundColor: "#000000",
-        scale: isMobile ? 1.2 : 2,
-        useCORS: true,
-        logging: false,
-      });
-  
-      const blob = await new Promise((resolve) => {
-        canvas.toBlob(
-          (createdBlob) => resolve(createdBlob),
-          "image/jpeg",
-          0.9
-        );
-      });
-  
-      if (!blob) {
-        alert("이미지 생성에 실패했습니다.");
-        return;
-      }
-  
-      const imageUrl = URL.createObjectURL(blob);
-  
-      const link = document.createElement("a");
-      link.href = imageUrl;
-      link.download = "zombie-love-result.jpg";
-      link.rel = "noopener";
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-  
-      setTimeout(() => {
-        URL.revokeObjectURL(imageUrl);
-      }, 3000);
-    } catch (error) {
-      console.error(error);
-      alert("결과 이미지 저장에 실패했습니다.");
-    } finally {
-      setIsSaving(false);
-    }
+    const link = document.createElement("a");
+    link.href = imageUrl;
+    link.download = `zombie-love-${selectedCharacter.id}-${result.type}-saved.png`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
 
@@ -923,7 +867,7 @@ export default function App() {
             <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}>
               
 
-              <div className="resultCaptureArea" ref={resultCaptureRef}>
+              <div className="resultCaptureArea">
               <section className="resultImageWrap">
                   <img
                     src={getResultImageSrc(selectedCharacter.id, result.type)}
@@ -987,9 +931,9 @@ export default function App() {
         
          {step === "result" && (
             <footer className="bottomBar resultFooter">
-              <button type="button" onClick={copyShareText} disabled={isSaving}>
+              <button type="button" onClick={copyShareText}>
                 <Share2 size={17} />
-                {isSaving ? "저장 중" : "결과 이미지 저장"}
+                결과 이미지 저장
               </button>
               <button type="button" onClick={reset} className="secondaryButton">
                 <RotateCcw size={17} />
