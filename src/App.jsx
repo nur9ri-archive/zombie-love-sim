@@ -539,9 +539,18 @@ function ProgressBar({ current, total }) {
 }
 
 export default function App() {
+  const SHOW_UNSTABLE_ALERT = false;
+
   useEffect(() => {
-    alert("🥴💖🪚💥현재 기능 수정중이라 사이트가 불안정합니다.");
+    if (!SHOW_UNSTABLE_ALERT) return;
+
+    alert("현재 기능 수정중이라 사이트가 불안정합니다.");
   }, []);
+  /*
+useEffect(() => {
+  alert("현재 기능 수정중이라 사이트가 불안정합니다.");
+}, []);
+*/
   const [step, setStep] = useState("intro");
   const [selectedCharacterId, setSelectedCharacterId] = useState("A");
   const [flippedCharacterId, setFlippedCharacterId] = useState(null);
