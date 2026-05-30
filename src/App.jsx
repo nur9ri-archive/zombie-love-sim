@@ -669,7 +669,15 @@ export default function App() {
           <div className="appTitle">좀비 아포칼립스 연애 시뮬레이션</div>
         </header>
       )}
-        <main className={step === "intro" ? "main introMain" : "main"}>
+        <main
+          className={
+            step === "intro"
+              ? "main introMain"
+              : step === "result"
+              ? "main resultMain"
+              : "main"
+          }
+        >
           {step === "intro" && (
             <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}>
               <section className="heroSection">

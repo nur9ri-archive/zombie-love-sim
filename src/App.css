@@ -75,7 +75,7 @@ button {
 
 /* Layout */
 .main {
-  padding: 0 20px 150px;
+  padding: 0 20px 132px;
 }
 
 .introMain {
@@ -655,7 +655,7 @@ button,
 }
 
 .creatorCredit {
-  margin: 18px 0 6px;
+  margin: 18px 0 12px;
   padding: 14px 12px 4px;
   text-align: center;
   color: rgba(255, 255, 255, 0.56);
@@ -685,6 +685,6 @@ button,
   letter-spacing: -0.03em;
 }
 
-.creatorLink:active {
-  transform: scale(0.98);
+.resultMain {
+  padding-bottom: 210px;
 }
