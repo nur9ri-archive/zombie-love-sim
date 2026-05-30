@@ -537,9 +537,9 @@ button {
   background: transparent;
   backdrop-filter: none;
   border-top: none;
-  padding: 14px 20px 18px;
+  padding: 14px 20px calc(18px + env(safe-area-inset-bottom));
   z-index: 99999;
-  pointer-events: none;
+  pointer-events: auto;
 }
 
 .bottomBar button,
@@ -559,6 +559,9 @@ button {
   gap: 6px;
   cursor: pointer;
   box-shadow: none;
+  pointer-events: auto;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .bottomBar button:disabled,
