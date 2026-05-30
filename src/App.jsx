@@ -639,11 +639,19 @@ export default function App() {
   const copyShareText = () => {
     if (!selectedCharacter || !result) return;
   
-    const imageUrl = getSavedResultImageSrc(selectedCharacter.id, result.type);
+    const imageUrl = `${getSavedResultImageSrc(
+      selectedCharacter.id,
+      result.type
+    )}?download=1`;
   
     const link = document.createElement("a");
     link.href = imageUrl;
-    link.download = `zombie-love-${selectedCharacter.id}-${result.type}-saved.png`;
+    link.setAttribute(
+      "download",
+      `zombie-love-${selectedCharacter.id}-${result.type}-saved.png`
+    );
+    link.setAttribute("target", "_self");
+    link.rel = "noopener";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

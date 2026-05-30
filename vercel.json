@@ -5,7 +5,7 @@
         "headers": [
           {
             "key": "Content-Disposition",
-            "value": "attachment"
+            "value": "attachment; filename=\"zombie-love-result.png\""
           },
           {
             "key": "Content-Type",
