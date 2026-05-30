@@ -671,14 +671,32 @@ export default function App() {
         logging: false,
       });
   
-      const imageUrl = canvas.toDataURL("image/jpeg", 0.9);
+      const blob = await new Promise((resolve) => {
+        canvas.toBlob(
+          (createdBlob) => resolve(createdBlob),
+          "image/jpeg",
+          0.9
+        );
+      });
+  
+      if (!blob) {
+        alert("이미지 생성에 실패했습니다.");
+        return;
+      }
+  
+      const imageUrl = URL.createObjectURL(blob);
   
       const link = document.createElement("a");
       link.href = imageUrl;
       link.download = "zombie-love-result.jpg";
+      link.rel = "noopener";
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
+  
+      setTimeout(() => {
+        URL.revokeObjectURL(imageUrl);
+      }, 3000);
     } catch (error) {
       console.error(error);
       alert("결과 이미지 저장에 실패했습니다.");
