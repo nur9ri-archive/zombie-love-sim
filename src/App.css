@@ -91,7 +91,7 @@ button {
 
 .heroTopImageWrap {
   width: 100%;
-  aspect-ratio: 15 / 8;
+  aspect-ratio: 5 / 2;
   overflow: hidden;
   position: relative;
   border-radius: 0;
