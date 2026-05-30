@@ -910,6 +910,18 @@ export default function App() {
                   <h2>{result.title}</h2>
                   <p>{result.body}</p>
                 </section>
+                <section className="creatorCredit">
+                  <p>© 2026 만든이 너굴이. All rights reserved.</p>
+
+                  <a
+                    href="https://blog.naver.com/nur9ri"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="creatorLink"
+                  >
+                    개발자 너굴이 만나기
+                  </a>
+                </section>
 
             
               </div>
