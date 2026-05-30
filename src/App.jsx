@@ -10,6 +10,7 @@ const characters = {
   A: {
     id: "A",
     name: "유하",
+    reactionName: "병약미소년 유하",
     reactionImages: {
       plus2: "/images/reactions/yuha-plus2.png",
       plus1: "/images/reactions/yuha-plus1.png",
@@ -23,6 +24,7 @@ const characters = {
   B: {
     id: "B",
     name: "이로",
+    reactionName: "츤데레 수집광 이로",
     reactionImages: {
       plus2: "/images/reactions/iro-plus2.png",
       plus1: "/images/reactions/iro-plus1.png",
@@ -36,6 +38,7 @@ const characters = {
   C: {
     id: "C",
     name: "태오",
+    reactionName: "투머치토커 생존전문가 태오",
     reactionImages: {
       plus2: "/images/reactions/taeo-plus2.png",
       plus1: "/images/reactions/taeo-plus1.png",
@@ -49,6 +52,7 @@ const characters = {
   D: {
     id: "D",
     name: "서윤",
+    reactionName: "치명적인 악역 서윤",
     reactionImages: {
       plus2: "/images/reactions/seoyoon-plus2.png",
       plus1: "/images/reactions/seoyoon-plus1.png",
@@ -839,8 +843,10 @@ export default function App() {
                   </div>
                 )}
 
-                <div className="reactionLabel">{selectedCharacter.name}의 반응</div>
-
+                <div className="reactionLabel">
+                  {selectedCharacter.reactionName || selectedCharacter.name}의 반응
+                </div>
+                
                 <p>“{lastReaction.text}”</p>
 
                 <div className="reactionScore">
