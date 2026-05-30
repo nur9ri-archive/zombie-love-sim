@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, Heart, RotateCcw, Share2 } from "lucide-react";
 import "./App.css";
@@ -539,6 +539,9 @@ function ProgressBar({ current, total }) {
 }
 
 export default function App() {
+  useEffect(() => {
+    alert("현재 기능 수정중이라 사이트가 불안정합니다.");
+  }, []);
   const [step, setStep] = useState("intro");
   const [selectedCharacterId, setSelectedCharacterId] = useState("A");
   const [flippedCharacterId, setFlippedCharacterId] = useState(null);
