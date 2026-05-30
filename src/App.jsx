@@ -898,7 +898,7 @@ export default function App() {
           <footer className="bottomBar">
             <button type="button" onClick={startGame} disabled={!selectedCharacterId}>
               {selectedCharacterId
-                ? `${characters[selectedCharacterId].name}와 살아남기`
+                ? `${characters[selectedCharacterId].name}쨩과 살아남기`
                 : "공략할 캐릭터를 선택하세요"}
               <ChevronRight size={18} />
             </button>
