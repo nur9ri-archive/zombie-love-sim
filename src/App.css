@@ -75,7 +75,7 @@ button {
 
 /* Layout */
 .main {
-  padding: 0 20px 140px;
+  padding: 0 20px 150px;
 }
 
 .introMain {
@@ -530,14 +530,14 @@ button {
 .bottomBar {
   position: fixed;
   left: 50%;
-  bottom: 0;
+  bottom: calc(16px + env(safe-area-inset-bottom));
   transform: translateX(-50%);
-  width: 100%;
-  max-width: 420px;
+  width: calc(100% - 32px);
+  max-width: 388px;
   background: transparent;
   backdrop-filter: none;
   border-top: none;
-  padding: 14px 20px calc(18px + env(safe-area-inset-bottom));
+  padding: 0;
   z-index: 99999;
   pointer-events: auto;
 }
