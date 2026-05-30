@@ -687,3 +687,32 @@ button,
   font-weight: 900;
   cursor: pointer;
 }
+
+.savePreviewActions {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.savePreviewShare {
+  width: 100%;
+  border: none;
+  border-radius: 16px;
+  padding: 14px 16px;
+  background: #8300e0;
+  color: #fff;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.savePreviewClose {
+  width: 100%;
+  border: none;
+  border-radius: 16px;
+  padding: 14px 16px;
+  background: #52487a;
+  color: #fff;
+  font-weight: 900;
+  cursor: pointer;
+}

@@ -544,7 +544,7 @@ export default function App() {
   const [lastReaction, setLastReaction] = useState(null);
   const [answerHistory, setAnswerHistory] = useState([]);
   const [isSaving, setIsSaving] = useState(false);
-  const [savedImageUrl, setSavedImageUrl] = useState(null);
+  const [savedImageBlob, setSavedImageBlob] = useState(null);
   
   const resultCaptureRef = useRef(null);
 
@@ -570,6 +570,7 @@ export default function App() {
     setAnswerHistory([]);
     setSavedImageUrl(null);
     setIsSaving(false);
+    setSavedImageBlob(null);
   };
 
   const startGame = () => {
