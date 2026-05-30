@@ -779,23 +779,23 @@ export default function App() {
                       setSelectedCharacterId(characterOrder[prevIndex]);
                     }}
                   >
-                    ‹
+                    <ChevronLeft size={26} strokeWidth={3} />
                   </button>
 
                   <button
-                    type="button"
-                    className="cardNavButton cardNavNext"
-                    aria-label="다음 캐릭터 보기"
-                    onClick={() => {
-                      const currentIndex = selectedCharacterId
-                        ? characterOrder.indexOf(selectedCharacterId)
-                        : 0;
-                      const nextIndex = (currentIndex + 1) % characterOrder.length;
-                      setSelectedCharacterId(characterOrder[nextIndex]);
-                    }}
-                  >
-                    ›
-                  </button>
+                  type="button"
+                  className="cardNavButton cardNavNext"
+                  aria-label="다음 캐릭터 보기"
+                  onClick={() => {
+                    const currentIndex = selectedCharacterId
+                      ? characterOrder.indexOf(selectedCharacterId)
+                      : 0;
+                    const nextIndex = (currentIndex + 1) % characterOrder.length;
+                    setSelectedCharacterId(characterOrder[nextIndex]);
+                  }}
+                >
+                  <ChevronRight size={26} strokeWidth={3} />
+                </button>
                 </div>
               </section>
             </motion.div>

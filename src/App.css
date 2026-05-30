@@ -141,7 +141,7 @@ button {
 .cardSlider {
   position: relative;
   height: auto;
-  aspect-ratio: 5 / 6;
+  aspect-ratio: 20 / 27;
   margin: 0 -20px;
   overflow: hidden;
 }
@@ -151,7 +151,7 @@ button {
   top: 0;
   left: 7%;
   width: 86%;
-  aspect-ratio: 5 / 6;
+  aspect-ratio: 20 / 27;
   cursor: pointer;
   perspective: 1200px;
   outline: none;
@@ -195,18 +195,21 @@ button {
   z-index: 40;
   width: 42px;
   height: 42px;
+  padding: 0;
   border: none;
   border-radius: 999px;
   background: rgba(0, 0, 0, 0.68);
   color: #fff;
-  font-size: 31px;
-  line-height: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transform: translateY(-50%);
   backdrop-filter: blur(10px);
+}
+
+.cardNavButton svg {
+  display: block;
 }
 
 .cardNavPrev {
